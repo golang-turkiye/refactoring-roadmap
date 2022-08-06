@@ -1,4 +1,6 @@
-# Refactor Roadmap
+# Refactor Roadmap "TR"
+**NOTE:** I will complete readme.md in English.
+
 ### Örnek Proje İçeriği
 **Uygulama Özeti**: URL Shorter
 
@@ -23,7 +25,7 @@
   - linkID **uint**
 
 ##DB Diagram
-![](db_model.png)
+![](dbmodel.png)
 
 ## Refactor Öncesi
 ### Klasör Yapısı:
@@ -35,16 +37,46 @@
 - schema: Response ve Request Body'ler barındırılır.
 - router: Yönlendirmeleri barındırır.
 
-## Refactor Sonrası
-- cmd:
-- internal:
-  - core:
-    - domain:
-    - service:
-    - handler:
-    - usecase:
-    - repository:
-- pkg:
-  - mocks:
-  - database:
-    - 
+### Refactor Sonrası
+### Klasör Yapısı:
+- cmd: ...
+  - link: ...
+  - user: ...
+  - single: Tüm Handlerların tek noktadan derlenmesi içindir
+- internal: ...
+  - core: ...
+    - domain: ...
+    - service: ...
+    - handler: ...
+    - usecase: ...
+    - repository: ...
+- pkg: ...
+  - database: ...
+    - postgres: ...
+
+## Refactor Adımları
+#### v1.0.0
+- [X] Klasör Yapısının Kurgulanması
+- [X] Mockery kütüphanesi eklenmesi
+- [X] Logrus kütüphanesi eklenmesi
+- [X] Repository Interfacelerinin oluşturulması
+  - [X] Mock Repository Oluşturulması
+  - [X] GormDB Repository Oluşturulması
+- [X] Modellerin Domain katmanına taşınması
+- [X] Usecaselerin Oluşturulması
+- [X] Servislerin Oluşturulması
+  - [X] Mock Service oluşturulması
+  - [X] V1 Service oluşturulması
+- [X] Handlerların Oluşturulması
+  - [X] apiV1 Handler oluşturulması
+- [X] Testlerin Yazılması
+  - [X] Repository Testlerinin Yazılması
+  - [X] Service Testlerinin Yazılması
+  - [ ] Handler Testlerinin Yazılması
+- [X] Makefile eklenmesi
+- [ ] Dockerfile eklenmesi
+- [ ] Docker Compose eklenmesi
+- [ ] Swagger entegrasyonu
+#### v2.0.0
+- [ ] Çoklu Handler çalıştırma mekaniğinin eklenmesi
+- [ ] Docker Compose entegrasyonu

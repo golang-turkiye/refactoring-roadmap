@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/handler/apiV1"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/repository/postgres"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/repository/gormDB"
 	v1 "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/service/v1"
 	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/database/localDB"
 	"github.com/gorilla/mux"
@@ -19,11 +19,11 @@ func main() {
 	router := mux.NewRouter()
 	logger := logrus.New()
 	// Repositories Generated
-	userRepo, err := postgres.NewUserRepository(db, logger)
+	userRepo, err := gormDB.NewUserRepository(db, logger)
 	if err != nil {
 		panic(err)
 	}
-	linkRepo, err := postgres.NewLinkRepository(db, logger)
+	linkRepo, err := gormDB.NewLinkRepository(db, logger)
 	if err != nil {
 		panic(err)
 	}

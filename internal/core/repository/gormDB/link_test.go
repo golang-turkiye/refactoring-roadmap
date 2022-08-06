@@ -1,8 +1,8 @@
-package postgres_test
+package gormDB_test
 
 import (
 	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/repository/postgres"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/repository/gormDB"
 	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/database/localDB"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
@@ -14,7 +14,7 @@ import (
 func TestNewLinkRepository(t *testing.T) {
 	db, err := localDB.Connection("test_new_link_repository.db")
 	assert.Nil(t, err)
-	linkRepo, err := postgres.NewLinkRepository(db, logrus.New())
+	linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 	assert.Nil(t, err)
 	assert.NotNil(t, linkRepo)
 	assert.Nil(t, os.Remove("test_new_link_repository.db"))
@@ -26,7 +26,7 @@ func TestLinkRepository_CreateLink(t *testing.T) {
 		t.Error(err)
 	}
 	t.Run("Success", func(t *testing.T) {
-		linkRepo, err := postgres.NewLinkRepository(db, logrus.New())
+		linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 		if err != nil {
 			t.Error(err)
 		}
@@ -42,7 +42,7 @@ func TestLinkRepository_CreateLink(t *testing.T) {
 func TestLinkRepository_GetLinkByID(t *testing.T) {
 	db, err := localDB.Connection("test_get_link_by_id.db")
 	assert.Nil(t, err)
-	linkRepo, err := postgres.NewLinkRepository(db, logrus.New())
+	linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 	assert.Nil(t, err)
 	link := domain.Link{
 		LongUrl:        "https://www.google.com",
@@ -61,7 +61,7 @@ func TestLinkRepository_GetLinkByID(t *testing.T) {
 func TestLinkRepository_GetLinksByUserID(t *testing.T) {
 	db, err := localDB.Connection("test_get_links_by_user_id.db")
 	assert.Nil(t, err)
-	linkRepo, err := postgres.NewLinkRepository(db, logrus.New())
+	linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 	assert.Nil(t, err)
 	links := []domain.Link{
 		{
@@ -94,7 +94,7 @@ func TestLinkRepository_GetLinksByUserID(t *testing.T) {
 func TestLinkRepository_DeactivateLink(t *testing.T) {
 	db, err := localDB.Connection("test_deactivate_link.db")
 	assert.Nil(t, err)
-	linkRepo, err := postgres.NewLinkRepository(db, logrus.New())
+	linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 	assert.Nil(t, err)
 	link := domain.Link{
 		Model: gorm.Model{
@@ -118,7 +118,7 @@ func TestLinkRepository_DeactivateLink(t *testing.T) {
 func TestLinkRepository_GetLinkByURL(t *testing.T) {
 	db, err := localDB.Connection("test_get_link_by_url.db")
 	assert.Nil(t, err)
-	linkRepo, err := postgres.NewLinkRepository(db, logrus.New())
+	linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 	assert.Nil(t, err)
 	link := domain.Link{
 		Model: gorm.Model{
@@ -141,7 +141,7 @@ func TestLinkRepository_GetLinkByURL(t *testing.T) {
 func TestLinkRepository_UpdateLink(t *testing.T) {
 	db, err := localDB.Connection("test_update_link.db")
 	assert.Nil(t, err)
-	linkRepo, err := postgres.NewLinkRepository(db, logrus.New())
+	linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 	assert.Nil(t, err)
 	link := domain.Link{
 		Model: gorm.Model{

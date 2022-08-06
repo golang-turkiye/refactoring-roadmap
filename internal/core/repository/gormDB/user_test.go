@@ -1,4 +1,4 @@
-package postgres
+package gormDB
 
 import (
 	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
