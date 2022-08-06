@@ -5,6 +5,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func Connection() (*gorm.DB, error) {
-	return gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
+func Connection(filename string) (*gorm.DB, error) {
+	return gorm.Open(sqlite.Open(filename), &gorm.Config{})
 }

@@ -21,10 +21,26 @@ func NewUserRepository(db *gorm.DB, logger *logrus.Logger) (*UserRepository, err
 
 // GetUserByID returns a user by its ID.
 func (r *UserRepository) GetUserByID(userID uint) (*domain.User, error) {
-	return nil, nil
+	tx := r.db.Begin()
+	user := &domain.User{}
+	result := tx.First(user, userID)
+	if result.Error != nil || result.RowsAffected == 0 {
+		tx.Rollback()
+		return nil, result.Error
+	}
+	tx.Commit()
+	return user, nil
 }
 
 // GetUserByEmail returns a user by its email.
 func (r *UserRepository) GetUserByEmail(email string) (*domain.User, error) {
-	return nil, nil
+	tx := r.db.Begin()
+	user := &domain.User{}
+	result := tx.Where("email = ?", email).First(user)
+	if result.Error != nil || result.RowsAffected == 0 {
+		tx.Rollback()
+		return nil, result.Error
+	}
+	tx.Commit()
+	return user, nil
 }
