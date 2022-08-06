@@ -1,5 +1,7 @@
 package usecase
 
+import "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+
 type UserResponse struct {
 	ID    uint           `json:"id"`
 	Email string         `json:"email"`
@@ -15,4 +17,12 @@ type UserLoginResponse struct {
 	ID          uint   `json:"id"`
 	Email       string `json:"email"`
 	AccessToken string `json:"access_token"`
+}
+
+func MapUserResponse(user *domain.User) *UserResponse {
+	return &UserResponse{
+		ID:    user.Model.ID,
+		Email: user.Email,
+		Links: MapLinkListResponse(user.Links),
+	}
 }

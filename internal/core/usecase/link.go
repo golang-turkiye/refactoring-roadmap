@@ -1,10 +1,6 @@
 package usecase
 
-const (
-	ErrInvalidLongURL   = "invalid long url"
-	ErrInvalidLinkID    = "invalid link id"
-	ErrInvalidShortPath = "invalid short path"
-)
+import "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
 
 type LinkResponse struct {
 	ID       uint   `json:"id"`
@@ -14,4 +10,20 @@ type LinkResponse struct {
 
 type LinkCreateRequest struct {
 	URL string `json:"url"`
+}
+
+func MapLinkListResponse(links []domain.Link) []LinkResponse {
+	var linkResponses []LinkResponse
+	for _, link := range links {
+		linkResponses = append(linkResponses, MapLinkResponse(link))
+	}
+	return linkResponses
+}
+
+func MapLinkResponse(link domain.Link) LinkResponse {
+	return LinkResponse{
+		ID:       link.Model.ID,
+		URL:      link.LongUrl,
+		ShortURL: link.ShortUrl,
+	}
 }
