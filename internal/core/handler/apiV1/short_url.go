@@ -2,6 +2,9 @@ package apiV1
 
 import (
 	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/service"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/usecase"
+	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/authentication"
+	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/response"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -63,7 +66,29 @@ func (h *ShortURLHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 }
 func (h *ShortURLHandler) GetUser(w http.ResponseWriter, r *http.Request) {
-
+	token := r.Header.Get("Authorization")
+	if token == "" {
+		h.logger.Error("Token is empty on GetUser")
+		response.Unauthorized(w, "Error getting user", h.logger)
+		return
+	}
+	email, err := authentication.GetEmailByToken(token)
+	if err != nil {
+		h.logger.Error("Authorization error on getting user")
+		response.Unauthorized(w, "Error getting user", h.logger)
+		return
+	}
+	user, err := h.userService.GetUserByEmail(email)
+	if err != nil {
+		h.logger.WithFields(logrus.Fields{
+			"email": email,
+		}).Warn("Error getting user")
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Not Authorized"))
+		return
+	}
+	userResponse := usecase.MapUserResponse(user)
+	response.OKResponse(w, userResponse, h.logger)
 }
 func (h *ShortURLHandler) GetUserByEmail(w http.ResponseWriter, r *http.Request) {
 
