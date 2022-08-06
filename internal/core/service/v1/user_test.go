@@ -100,7 +100,7 @@ func TestUserService_Login(t *testing.T) {
 			userRepo.On("GetUserByEmail", tc.user.Email).Return(tc.user, tc.expected)
 			token, err := userService.Login(tc.user)
 			assert.Equal(t, err, tc.expected)
-			assert.Equal(t, token, "")
+			assert.NotEmpty(t, token)
 		})
 	}
 }
