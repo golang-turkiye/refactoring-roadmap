@@ -2,11 +2,21 @@ package postgres
 
 import (
 	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
 type LinkRepository struct {
-	db *gorm.DB
+	db     *gorm.DB
+	logger *logrus.Logger
+}
+
+func NewLinkRepository(db *gorm.DB, logger *logrus.Logger) (*LinkRepository, error) {
+	if err := db.AutoMigrate(&domain.Link{}); err != nil {
+		logger.Error("Error while auto migrating link table")
+		return nil, err
+	}
+	return &LinkRepository{db: db, logger: logger}, nil
 }
 
 // GetLinkByID returns a link by its ID.
