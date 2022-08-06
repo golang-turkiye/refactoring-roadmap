@@ -1,10 +1,12 @@
 package repository
 
+import "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+
 type LinkRepository interface {
-	GetLinkByID(linkID uint) (*Link, error)
-	GetLinkByURL(url string) (*Link, error)
-	GetLinksByUserID(userID uint) ([]*Link, error)
-	CreateLink(link *Link) error
-	UpdateLink(link *Link) error
-	DeactivateLink(link *Link) error
+	GetLinkByID(linkID uint) (*domain.Link, error)
+	GetLinkByURL(url string) (*domain.Link, error)
+	GetLinksByUserID(userID uint) ([]*domain.Link, error)
+	CreateLink(link *domain.Link) error
+	UpdateLink(link *domain.Link) error
+	DeactivateLink(link *domain.Link) error
 }
