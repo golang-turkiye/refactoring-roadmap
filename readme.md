@@ -72,8 +72,9 @@
 - [X] Testlerin Yazılması
   - [X] Repository Testlerinin Yazılması
   - [X] Service Testlerinin Yazılması
-  - [ ] Handler Testlerinin Yazılması
+  - [X] Handler Testlerinin Yazılması
 - [X] Makefile eklenmesi
+#### v1.5.0
 - [ ] Dockerfile eklenmesi
 - [ ] Docker Compose eklenmesi
 - [ ] Swagger entegrasyonu
