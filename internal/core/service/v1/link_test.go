@@ -123,23 +123,26 @@ func TestLinkService_GetLink(t *testing.T) {
 	assert.NotNil(t, linkService)
 	testCases := []struct {
 		name     string
+		shorturl string
 		link     *domain.Link
 		expected error
 	}{
 		{
 			name:     "Success",
+			shorturl: "shortlink.com/shorten",
 			link:     link,
 			expected: nil,
 		},
 		{
 			name:     "Fail",
-			link:     &domain.Link{},
+			shorturl: "",
+			link:     nil,
 			expected: errors.New(usecase.ErrInvalidShortPath),
 		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			link, err := linkService.GetLink(tc.link.ShortenURLPath)
+			link, err := linkService.GetLink(tc.shorturl)
 			assert.Equal(t, link, tc.link)
 			assert.Equal(t, err, tc.expected)
 		})
