@@ -36,7 +36,7 @@ func (r *LinkRepository) GetLinkByID(linkID uint) (*domain.Link, error) {
 func (r *LinkRepository) GetLinkByURL(url string) (*domain.Link, error) {
 	tx := r.db.Begin()
 	link := &domain.Link{}
-	result := tx.Where("shorten_url_path = ?", url).First(link)
+	result := tx.Where("short_url = ?", url).First(link)
 	if result.Error != nil || result.RowsAffected == 0 {
 		tx.Rollback()
 		return nil, result.Error

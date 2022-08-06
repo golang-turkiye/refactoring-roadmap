@@ -31,8 +31,8 @@ func TestLinkRepository_CreateLink(t *testing.T) {
 			t.Error(err)
 		}
 		link := domain.Link{
-			LongUrl:        "https://www.google.com",
-			ShortenURLPath: "shortlink.com/shorten",
+			LongUrl:  "https://www.google.com",
+			ShortUrl: "shortlink.com/shorten",
 		}
 		assert.Nil(t, linkRepo.CreateLink(&link))
 	})
@@ -45,15 +45,15 @@ func TestLinkRepository_GetLinkByID(t *testing.T) {
 	linkRepo, err := gormDB.NewLinkRepository(db, logrus.New())
 	assert.Nil(t, err)
 	link := domain.Link{
-		LongUrl:        "https://www.google.com",
-		ShortenURLPath: "shortlink.com/shorten",
+		LongUrl:  "https://www.google.com",
+		ShortUrl: "shortlink.com/shorten",
 	}
 	assert.Nil(t, linkRepo.CreateLink(&link))
 	t.Run("Success", func(t *testing.T) {
 		link, err := linkRepo.GetLinkByID(link.ID)
 		assert.Nil(t, err)
 		assert.Equal(t, link.LongUrl, "https://www.google.com")
-		assert.Equal(t, link.ShortenURLPath, "shortlink.com/shorten")
+		assert.Equal(t, link.ShortUrl, "shortlink.com/shorten")
 	})
 	assert.Nil(t, os.Remove("test_get_link_by_id.db"))
 }
@@ -65,19 +65,19 @@ func TestLinkRepository_GetLinksByUserID(t *testing.T) {
 	assert.Nil(t, err)
 	links := []domain.Link{
 		{
-			OwnerID:        1,
-			LongUrl:        "https://www.google.com",
-			ShortenURLPath: "shortlink.com/shorten",
+			OwnerID:  1,
+			LongUrl:  "https://www.google.com",
+			ShortUrl: "shortlink.com/shorten",
 		},
 		{
-			OwnerID:        1,
-			LongUrl:        "https://www.google2.com",
-			ShortenURLPath: "shortlink.com/shorten2",
+			OwnerID:  1,
+			LongUrl:  "https://www.google2.com",
+			ShortUrl: "shortlink.com/shorten2",
 		},
 		{
-			OwnerID:        2,
-			LongUrl:        "https://www.google2.com",
-			ShortenURLPath: "shortlink.com/shorten2",
+			OwnerID:  2,
+			LongUrl:  "https://www.google2.com",
+			ShortUrl: "shortlink.com/shorten2",
 		},
 	}
 	for _, l := range links {
@@ -100,9 +100,9 @@ func TestLinkRepository_DeactivateLink(t *testing.T) {
 		Model: gorm.Model{
 			ID: 1,
 		},
-		LongUrl:        "https://www.google.com",
-		ShortenURLPath: "shortlink.com/shorten",
-		IsDeleted:      false,
+		LongUrl:   "https://www.google.com",
+		ShortUrl:  "shortlink.com/shorten",
+		IsDeleted: false,
 	}
 	assert.Nil(t, linkRepo.CreateLink(&link))
 	t.Run("Success", func(t *testing.T) {
@@ -124,16 +124,16 @@ func TestLinkRepository_GetLinkByURL(t *testing.T) {
 		Model: gorm.Model{
 			ID: 1,
 		},
-		LongUrl:        "https://www.google.com",
-		ShortenURLPath: "shortlink.com/shorten",
-		IsDeleted:      false,
+		LongUrl:   "https://www.google.com",
+		ShortUrl:  "shortlink.com/shorten",
+		IsDeleted: false,
 	}
 	assert.Nil(t, linkRepo.CreateLink(&link))
 	t.Run("Success", func(t *testing.T) {
-		link, err := linkRepo.GetLinkByURL(link.ShortenURLPath)
+		link, err := linkRepo.GetLinkByURL(link.ShortUrl)
 		assert.Nil(t, err)
 		assert.Equal(t, link.LongUrl, "https://www.google.com")
-		assert.Equal(t, link.ShortenURLPath, "shortlink.com/shorten")
+		assert.Equal(t, link.ShortUrl, "shortlink.com/shorten")
 	})
 	assert.Nil(t, os.Remove("test_get_link_by_url.db"))
 }
@@ -147,17 +147,17 @@ func TestLinkRepository_UpdateLink(t *testing.T) {
 		Model: gorm.Model{
 			ID: 1,
 		},
-		LongUrl:        "https://www.google.com",
-		ShortenURLPath: "shortlink.com/shorten",
-		IsDeleted:      false,
+		LongUrl:   "https://www.google.com",
+		ShortUrl:  "shortlink.com/shorten",
+		IsDeleted: false,
 	}
 	assert.Nil(t, linkRepo.CreateLink(&link))
 	t.Run("Success", func(t *testing.T) {
-		link.ShortenURLPath = "shortlink.com/shorten2"
+		link.ShortUrl = "shortlink.com/shorten2"
 		assert.Nil(t, linkRepo.UpdateLink(&link))
 		link, err := linkRepo.GetLinkByID(link.ID)
 		assert.Nil(t, err)
-		assert.Equal(t, link.ShortenURLPath, "shortlink.com/shorten2")
+		assert.Equal(t, link.ShortUrl, "shortlink.com/shorten2")
 	})
 	assert.Nil(t, os.Remove("test_update_link.db"))
 }
