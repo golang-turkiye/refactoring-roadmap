@@ -9,6 +9,16 @@ type LinkService struct {
 	linkRepository repository.LinkRepository
 }
 
+// NewLinkService creates a new LinkService.
+func NewLinkService(linkRepository repository.LinkRepository) *LinkService {
+	return &LinkService{
+		linkRepository: linkRepository,
+	}
+}
+
+func (s *LinkService) GetLinkByID(linkID uint) (*domain.Link, error) {
+	return nil, nil
+}
 func (s *LinkService) GetLink(ownerID, shortPath string) (*domain.Link, error) {
 	return nil, nil
 }

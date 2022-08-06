@@ -9,6 +9,13 @@ type UserService struct {
 	userRepository repository.UserRepository
 }
 
+// NewUserService creates a new UserService.
+func NewUserService(userRepository repository.UserRepository) *UserService {
+	return &UserService{
+		userRepository: userRepository,
+	}
+}
+
 func (s *UserService) Login(*domain.User) (string, error) {
 	return "", nil
 }
