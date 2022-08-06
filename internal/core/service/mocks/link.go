@@ -65,13 +65,13 @@ func (_m *MockLinkService) GetAllLinks(ownerID uint) ([]*domain.Link, error) {
 	return r0, r1
 }
 
-// GetLink provides a mock function with given fields: ownerID, shortPath
-func (_m *MockLinkService) GetLink(ownerID string, shortPath string) (*domain.Link, error) {
-	ret := _m.Called(ownerID, shortPath)
+// GetLink provides a mock function with given fields: shortPath
+func (_m *MockLinkService) GetLink(shortPath string) (*domain.Link, error) {
+	ret := _m.Called(shortPath)
 
 	var r0 *domain.Link
-	if rf, ok := ret.Get(0).(func(string, string) *domain.Link); ok {
-		r0 = rf(ownerID, shortPath)
+	if rf, ok := ret.Get(0).(func(string) *domain.Link); ok {
+		r0 = rf(shortPath)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*domain.Link)
@@ -79,8 +79,8 @@ func (_m *MockLinkService) GetLink(ownerID string, shortPath string) (*domain.Li
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(string, string) error); ok {
-		r1 = rf(ownerID, shortPath)
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(shortPath)
 	} else {
 		r1 = ret.Error(1)
 	}
