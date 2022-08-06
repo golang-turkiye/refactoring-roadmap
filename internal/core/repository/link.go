@@ -8,6 +8,5 @@ type LinkRepository interface {
 	GetLinkByURL(url string) (*domain.Link, error)
 	GetLinksByUserID(userID uint) ([]*domain.Link, error)
 	CreateLink(link *domain.Link) error
-	UpdateLink(link *domain.Link) error
 	DeactivateLink(link *domain.Link) error
 }

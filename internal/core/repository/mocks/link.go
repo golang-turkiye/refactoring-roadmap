@@ -111,20 +111,6 @@ func (_m *MockLinkRepository) GetLinksByUserID(userID uint) ([]*domain.Link, err
 	return r0, r1
 }
 
-// UpdateLink provides a mock function with given fields: link
-func (_m *MockLinkRepository) UpdateLink(link *domain.Link) error {
-	ret := _m.Called(link)
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func(*domain.Link) error); ok {
-		r0 = rf(link)
-	} else {
-		r0 = ret.Error(0)
-	}
-
-	return r0
-}
-
 // NewMockLinkRepository creates a new instance of MockLinkRepository. It also registers the testing.TB interface on the mock and a cleanup function to assert the mocks expectations.
 func NewMockLinkRepository(t testing.TB) *MockLinkRepository {
 	mock := &MockLinkRepository{}
