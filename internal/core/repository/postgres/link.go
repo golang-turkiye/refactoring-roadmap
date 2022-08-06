@@ -85,7 +85,7 @@ func (r *LinkRepository) UpdateLink(link *domain.Link) error {
 // DeactivateLink deactivates an existing link.
 func (r *LinkRepository) DeactivateLink(link *domain.Link) error {
 	tx := r.db.Begin()
-	result := tx.Model(&domain.Link{}).Where("id = ?", link.ID).Update("is_deleted", true)
+	result := tx.Model(&domain.Link{}).Where("id = ? and is_deleted = false", link.ID).Update("is_deleted", true)
 	if result.Error != nil {
 		tx.Rollback()
 		return result.Error
