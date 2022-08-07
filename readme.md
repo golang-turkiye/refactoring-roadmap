@@ -74,6 +74,7 @@
   - [X] Service Testlerinin Yazılması
   - [X] Handler Testlerinin Yazılması
 - [X] Makefile eklenmesi
+- [X] GoLint eklenmesi
 #### v1.5.0
 - [ ] Dockerfile eklenmesi
 - [ ] Docker Compose eklenmesi
