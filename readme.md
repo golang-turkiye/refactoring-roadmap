@@ -81,4 +81,4 @@
 - [ ] Swagger entegrasyonu
 #### v2.0.0
 - [ ] Çoklu Handler çalıştırma mekaniğinin eklenmesi
-- [ ] Docker Compose entegrasyonu
+- [ ] Uygulamanın Serverless mimariye taşınması
