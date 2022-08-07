@@ -26,6 +26,7 @@ func NewShortURLHander(linkService service.LinkService, userService service.User
 	}
 }
 
+// Run starts short url handler
 func (h *ShortURLHandler) Run() {
 	h.router.HandleFunc("/v1/link/all", h.GetAllLinks).Methods("GET")
 	h.router.HandleFunc("/v1/link/", h.CreateLink).Methods("POST")
@@ -47,44 +48,54 @@ func (h *ShortURLHandler) Run() {
 		return
 	}
 }
+
+// GoLink redirects to link
 func (h *ShortURLHandler) GoLink(w http.ResponseWriter, r *http.Request) {
 
 }
+
+// GetLink returns link by id
 func (h *ShortURLHandler) GetLink(w http.ResponseWriter, r *http.Request) {
 
 }
+
+// GetAllLinks returns all links
 func (h *ShortURLHandler) GetAllLinks(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("GetAllLinks"))
+	response.OKResponse(w, "OK", h.logger)
 }
+
+// CreateLink creates link
 func (h *ShortURLHandler) CreateLink(w http.ResponseWriter, r *http.Request) {
 
 }
+
+// DeactivateLink deactivates link by id
 func (h *ShortURLHandler) DeactivateLink(w http.ResponseWriter, r *http.Request) {
 
 }
+
+// Login returns user by id
 func (h *ShortURLHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 }
+
+// GetUser returns user by id
 func (h *ShortURLHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 	token := r.Header.Get("Authorization")
 	if token == "" {
 		h.logger.Error("Token is empty on GetUser")
-		response.Unauthorized(w, "Error getting user", h.logger)
+		response.UnauthorizedResponse(w, "Error getting user", h.logger)
 		return
 	}
 	email, err := authentication.GetEmailByToken(token)
 	if err != nil {
 		h.logger.Error("Authorization error on getting user")
-		response.Unauthorized(w, "Error getting user", h.logger)
+		response.UnauthorizedResponse(w, "Error getting user", h.logger)
 		return
 	}
 	user, err := h.userService.GetUserByEmail(email)
 	if err != nil {
-		h.logger.WithFields(logrus.Fields{
-			"email": email,
-		}).Warn("Error getting user")
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Not Authorized"))
+		response.UnauthorizedResponse(w, "Not Authorized", h.logger)
 		return
 	}
 	userResponse := usecase.MapUserResponse(user)
