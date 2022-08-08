@@ -1,6 +1,6 @@
-package usecase
+package responseutils
 
-import "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+import "github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
 
 type LinkResponse struct {
 	ID       uint   `json:"id"`

@@ -2,24 +2,33 @@ package authentication
 
 import (
 	"errors"
-	"github.com/golang-jwt/jwt/v4"
+	jwt "github.com/golang-jwt/jwt/v4"
 	"strings"
 	"time"
 )
 
 type CustomClaims struct {
-	Email string `json:"email"`
+	Email string
 	jwt.RegisteredClaims
+	ExpireAt time.Time
+}
+
+func (c *CustomClaims) Valid() error {
+	if c.ExpireAt.Unix() < time.Now().Unix() {
+		return errors.New("Expired Token")
+	}
+	if c.Email == "" {
+		return errors.New("invalid token")
+	}
+	return nil
 }
 
 func GenerateToken(email string) (string, error) {
 	claims := CustomClaims{
-		Email: email,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: &jwt.NumericDate{Time: time.Now().Add(time.Hour * 24)},
-		},
+		Email:    email,
+		ExpireAt: time.Now().Add(24 * time.Hour),
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &claims)
 	return token.SignedString([]byte("secret"))
 }
 func GetEmailByToken(token string) (string, error) {
