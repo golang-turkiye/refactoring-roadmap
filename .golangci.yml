@@ -1,0 +1,111 @@
+run:
+  # default concurrency is a available CPU number
+  concurrency: 4
+
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  timeout: 3m
+
+  # exit code when at least one issue was found, default is 1
+  issues-exit-code: 1
+
+  # include test files or not, default is true
+  tests: false
+
+  skip-dirs:
+    - node_modules
+    - mocks
+
+  linters-settings:
+    gosec:
+      severity: low
+
+    revive:
+      ignore-generated-header: true
+      severity: warning
+      rules:
+        - name: exported
+          severity: warning
+        - name: error-return
+          severity: warning
+        - name: error-naming
+          severity: warning
+        - name: if-return
+          severity: warning
+        - name: var-naming
+          severity: warning
+        - name: var-declaration
+          severity: warning
+        - name: receiver-naming
+          severity: warning
+        - name: errorf
+          severity: warning
+        - name: empty-block
+          severity: warning
+        - name: unused-parameter
+          severity: warning
+        - name: unreachable-code
+          severity: warning
+        - name: redefines-builtin-id
+          severity: warning
+        - name: superfluous-else
+          severity: warning
+        - name: unexported-return
+          severity: warning
+        - name: indent-error-flow
+          severity: warning
+        - name: blank-imports
+          severity: warning
+        - name: range
+          severity: warning
+        - name: time-naming
+          severity: warning
+        - name: context-as-argument
+          severity: warning
+        - name: context-keys-type
+          severity: warning
+        - name: indent-error-flow
+          severity: warning
+        - name: waitgroup-by-value
+          severity: warning
+        - name: useless-break
+          severity: warning
+        - name: struct-tag
+          severity: warning
+
+  # https://golangci-lint.run/usage/linters/
+  linters:
+    disable-all: true
+    enable:
+      - asciicheck
+      - bodyclose
+      - deadcode
+      - durationcheck
+      - errcheck
+      - exhaustive
+      - exportloopref
+      - gofmt
+      - goimports
+      - gosec
+      - gosimple
+      - govet
+      - ineffassign
+      - makezero
+      - misspell
+      - nilerr
+      - prealloc
+      - revive
+      - rowserrcheck
+      - sqlclosecheck
+      - staticcheck
+      - structcheck
+      - unconvert
+      - unparam
+      - unused
+      - varcheck
+      # - errorlint
+      # - noctx
+    presets:
+      - bugs
+      - unused
+      - metalinter
+      - error
