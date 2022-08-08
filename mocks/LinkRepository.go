@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	domain "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
 	mock "github.com/stretchr/testify/mock"
 
 	testing "testing"
