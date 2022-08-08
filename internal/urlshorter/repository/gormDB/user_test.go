@@ -1,8 +1,8 @@
 package gormDB
 
 import (
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
-	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/database/localDB"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
+	"github.com/Golang-Turkiye/refactoring-roadmap/src/database/localDB"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"

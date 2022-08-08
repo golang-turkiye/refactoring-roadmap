@@ -1,6 +1,6 @@
 package service
 
-import "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+import "github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
 
 type UserService interface {
 	Login(*domain.User) (string, error)

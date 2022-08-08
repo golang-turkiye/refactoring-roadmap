@@ -1,11 +1,11 @@
-package v1_test
+package linkservice_test
 
 import (
 	"errors"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/repository/mocks"
-	v1 "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/service/v1"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/usecase/constant"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/helpers/utils/customerror"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/service/v1/link"
+	"github.com/Golang-Turkiye/refactoring-roadmap/mocks"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 	"testing"
@@ -13,13 +13,13 @@ import (
 
 func TestNewLinkService(t *testing.T) {
 	linkRepo := new(mocks.MockLinkRepository)
-	linkService := v1.NewLinkService(linkRepo)
+	linkService := linkservice.New(linkRepo)
 	assert.NotNil(t, linkService)
 }
 
 func TestLinkService_CreateLink(t *testing.T) {
 	linkRepo := new(mocks.MockLinkRepository)
-	linkService := v1.NewLinkService(linkRepo)
+	linkService := linkservice.New(linkRepo)
 	assert.NotNil(t, linkService)
 	testCases := []struct {
 		name     string
@@ -40,7 +40,7 @@ func TestLinkService_CreateLink(t *testing.T) {
 				LongUrl:  "",
 				ShortUrl: "shortlink.com/shorten",
 			},
-			expected: errors.New(constant.ErrInvalidLongURL),
+			expected: customerror.ErrInvalidLongURL,
 		},
 	}
 	for _, tc := range testCases {
@@ -54,7 +54,7 @@ func TestLinkService_CreateLink(t *testing.T) {
 
 func TestLinkService_DeactivateLink(t *testing.T) {
 	linkRepo := new(mocks.MockLinkRepository)
-	linkService := v1.NewLinkService(linkRepo)
+	linkService := linkservice.New(linkRepo)
 	assert.NotNil(t, linkService)
 	testCases := []struct {
 		name     string
@@ -83,12 +83,12 @@ func TestLinkService_DeactivateLink(t *testing.T) {
 				ShortUrl:  "shortlink.com/shorten",
 				IsDeleted: true,
 			},
-			expected: errors.New(constant.ErrInvalidLinkID),
+			expected: customerror.ErrInvalidLinkID,
 		},
 		{
 			name:     "Fail by Not Found",
 			link:     &domain.Link{},
-			expected: errors.New(constant.ErrInvalidLinkID),
+			expected: customerror.ErrInvalidLinkID,
 		},
 	}
 	for _, tc := range testCases {
@@ -107,7 +107,8 @@ func TestLinkService_DeactivateLink(t *testing.T) {
 }
 
 func TestLinkService_GetLink(t *testing.T) {
-	link := &domain.Link{
+	link := &domain.
+		Link{
 		Model: gorm.Model{
 			ID: 1,
 		},
@@ -118,8 +119,8 @@ func TestLinkService_GetLink(t *testing.T) {
 	}
 	linkRepo := new(mocks.MockLinkRepository)
 	linkRepo.On("GetLinkByURL", "shortlink.com/shorten").Return(link, nil)
-	linkRepo.On("GetLinkByURL", "").Return(nil, errors.New(constant.ErrInvalidShortPath))
-	linkService := v1.NewLinkService(linkRepo)
+	linkRepo.On("GetLinkByURL", "").Return(nil, customerror.ErrInvalidShortPath)
+	linkService := linkservice.New(linkRepo)
 	assert.NotNil(t, linkService)
 	testCases := []struct {
 		name     string
@@ -137,7 +138,7 @@ func TestLinkService_GetLink(t *testing.T) {
 			name:     "Fail",
 			shorturl: "",
 			link:     nil,
-			expected: errors.New(constant.ErrInvalidShortPath),
+			expected: customerror.ErrInvalidShortPath,
 		},
 	}
 	for _, tc := range testCases {

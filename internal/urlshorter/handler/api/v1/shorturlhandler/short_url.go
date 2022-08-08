@@ -1,24 +1,24 @@
-package apiV1
+package shorturlhandler
 
 import (
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/service"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/usecase"
-	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/authentication"
-	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/response"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/helpers/utils/authentication"
+	responseutils "github.com/Golang-Turkiye/refactoring-roadmap/internal/helpers/utils/response"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/service"
+	"github.com/Golang-Turkiye/refactoring-roadmap/src/response"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
-type ShortURLHandler struct {
+type shortURLHandler struct {
 	linkService service.LinkService
 	userService service.UserService
 	router      *mux.Router
 	logger      *logrus.Logger
 }
 
-func NewShortURLHander(linkService service.LinkService, userService service.UserService, router *mux.Router, logger *logrus.Logger) *ShortURLHandler {
-	return &ShortURLHandler{
+func NewShortURLHander(linkService service.LinkService, userService service.UserService, router *mux.Router, logger *logrus.Logger) *shortURLHandler {
+	return &shortURLHandler{
 		linkService: linkService,
 		userService: userService,
 		router:      router,
@@ -27,7 +27,7 @@ func NewShortURLHander(linkService service.LinkService, userService service.User
 }
 
 // Run starts short url handler
-func (h *ShortURLHandler) Run() {
+func (h *shortURLHandler) Run() {
 	h.router.HandleFunc("/v1/link/all", h.GetAllLinks).Methods("GET")
 	h.router.HandleFunc("/v1/link/", h.CreateLink).Methods("POST")
 	h.router.HandleFunc("/v1/link/{shortPath}", h.GetLink).Methods("GET")
@@ -50,37 +50,37 @@ func (h *ShortURLHandler) Run() {
 }
 
 // GoLink redirects to link
-func (h *ShortURLHandler) GoLink(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) GoLink(w http.ResponseWriter, r *http.Request) {
 
 }
 
 // GetLink returns link by id
-func (h *ShortURLHandler) GetLink(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) GetLink(w http.ResponseWriter, r *http.Request) {
 
 }
 
 // GetAllLinks returns all links
-func (h *ShortURLHandler) GetAllLinks(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) GetAllLinks(w http.ResponseWriter, r *http.Request) {
 	response.OKResponse(w, "OK", h.logger)
 }
 
 // CreateLink creates link
-func (h *ShortURLHandler) CreateLink(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) CreateLink(w http.ResponseWriter, r *http.Request) {
 
 }
 
 // DeactivateLink deactivates link by id
-func (h *ShortURLHandler) DeactivateLink(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) DeactivateLink(w http.ResponseWriter, r *http.Request) {
 
 }
 
 // Login returns user by id
-func (h *ShortURLHandler) Login(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 }
 
 // GetUser returns user by id
-func (h *ShortURLHandler) GetUser(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 	token := r.Header.Get("Authorization")
 	if token == "" {
 		h.logger.Error("Token is empty on GetUser")
@@ -98,9 +98,9 @@ func (h *ShortURLHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 		response.UnauthorizedResponse(w, "Not Authorized", h.logger)
 		return
 	}
-	userResponse := usecase.MapUserResponse(user)
+	userResponse := responseutils.MapUserResponse(user)
 	response.OKResponse(w, userResponse, h.logger)
 }
-func (h *ShortURLHandler) GetUserByEmail(w http.ResponseWriter, r *http.Request) {
+func (h *shortURLHandler) GetUserByEmail(w http.ResponseWriter, r *http.Request) {
 
 }

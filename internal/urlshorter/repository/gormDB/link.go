@@ -1,7 +1,7 @@
 package gormDB
 
 import (
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )

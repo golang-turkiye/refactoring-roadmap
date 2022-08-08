@@ -1,9 +1,9 @@
-package v1_test
+package userservice_test
 
 import (
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/repository/mocks"
-	v1 "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/service/v1"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
+	userservice "github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/service/v1/user"
+	"github.com/Golang-Turkiye/refactoring-roadmap/mocks"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 	"testing"
@@ -11,13 +11,13 @@ import (
 
 func TestNewUserService(t *testing.T) {
 	userRepo := new(mocks.MockUserRepository)
-	userService := v1.NewUserService(userRepo)
+	userService := userservice.New(userRepo)
 	assert.NotNil(t, userService)
 }
 
 func TestUserService_GetUser(t *testing.T) {
 	userRepo := new(mocks.MockUserRepository)
-	userService := v1.NewUserService(userRepo)
+	userService := userservice.New(userRepo)
 	assert.NotNil(t, userService)
 	testCases := []struct {
 		name     string
@@ -47,7 +47,7 @@ func TestUserService_GetUser(t *testing.T) {
 
 func TestUserService_GetUserByEmail(t *testing.T) {
 	userRepo := new(mocks.MockUserRepository)
-	userService := v1.NewUserService(userRepo)
+	userService := userservice.New(userRepo)
 	assert.NotNil(t, userService)
 	testCases := []struct {
 		name     string
@@ -77,7 +77,7 @@ func TestUserService_GetUserByEmail(t *testing.T) {
 
 func TestUserService_Login(t *testing.T) {
 	userRepo := new(mocks.MockUserRepository)
-	userService := v1.NewUserService(userRepo)
+	userService := userservice.New(userRepo)
 	assert.NotNil(t, userService)
 	testCases := []struct {
 		name     string

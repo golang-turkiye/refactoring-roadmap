@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
+import "github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
 
 // UserRepository is the repository for users.
 type UserRepository interface {

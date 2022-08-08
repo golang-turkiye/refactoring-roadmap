@@ -1,10 +1,10 @@
-package apiV1_test
+package shorturlhandler_test
 
 import (
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/domain"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/handler/apiV1"
-	"github.com/Golang-Turkiye/refactoring-roadmap/internal/core/service/mocks"
-	"github.com/Golang-Turkiye/refactoring-roadmap/pkg/authentication"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/helpers/utils/authentication"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/domain"
+	"github.com/Golang-Turkiye/refactoring-roadmap/internal/urlshorter/handler/api/v1/shorturlhandler"
+	"github.com/Golang-Turkiye/refactoring-roadmap/mocks"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -16,7 +16,8 @@ import (
 
 func TestShortURLHandler_GetUser(t *testing.T) {
 	userService := new(mocks.MockUserService)
-	user := domain.User{Model: gorm.Model{ID: 1}, Email: "test@test.com", Links: []domain.Link{
+	user := domain.
+		User{Model: gorm.Model{ID: 1}, Email: "test@test.com", Links: []domain.Link{
 		{Model: gorm.Model{ID: 1}, LongUrl: "http://test.com", ShortUrl: "http://test.com/1"},
 		{Model: gorm.Model{ID: 2}, LongUrl: "http://test.com", ShortUrl: "http://test.com/1"},
 	}}
@@ -52,7 +53,7 @@ func TestShortURLHandler_GetUser(t *testing.T) {
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
 			userService.On("GetUserByEmail", mock.Anything).Return(&user, nil)
-			shortURLHandler := apiV1.NewShortURLHander(linkService, userService, nil, logger)
+			shortURLHandler := shorturlhandler.NewShortURLHander(linkService, userService, nil, logger)
 			shortURLHandler.GetUser(testCase.responseWriter, testCase.request)
 			assert.Equal(t, testCase.expectedStatus, testCase.responseWriter.Code)
 			assert.Equal(t, testCase.expectedBody, testCase.responseWriter.Body.String())
